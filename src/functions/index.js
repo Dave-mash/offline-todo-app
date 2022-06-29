@@ -17,11 +17,12 @@ export const fetchOfflineToDos = () => todos;
 
 // add todo
 export const addToDo = (payload) => {
+    const store = localStorage.getItem('todos');
+    const todos = !store ? [] : JSON.parse(store);
+    
     todos.push(payload);
     const updatedToDos = JSON.stringify(todos);
     localStorage.setItem('todos', updatedToDos);
-
-    return todos;
 }
 
 // update todo

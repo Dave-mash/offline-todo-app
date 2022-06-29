@@ -9,9 +9,9 @@ const Dashboard = () => {
     const [todos, setToDos] = useState(storedToDos);
 
     const updateToDoList = updates => {
-        // addToDo(updates);
+        addToDo(updates);
         setToDos([
-            { ...updates },
+            updates,
             ...todos
         ]);
     };

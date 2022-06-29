@@ -9,8 +9,8 @@ const ToDoList = ({ todos }) => {
             <div className="todo-list">
                 <div className="todo-list__content">
                     {
-                        !!todos?.length ? todos.map((todo, idx) => (
-                            <ToDoItem key={idx} todo={todo} />
+                        !!todos?.length ? todos.map((todo) => (
+                            <ToDoItem key={todo.id} todo={todo} />
                         )) : <p>Nothing here yet! Add a ToDo?</p>
                     }
                 </div>
