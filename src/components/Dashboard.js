@@ -18,7 +18,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <Header updateToDoList={updateToDoList} />
+            <Header updateToDoList={updateToDoList} setToDos={setToDos} />
             <ToDoList todos={todos} setToDos={setToDos} />
         </>
     );

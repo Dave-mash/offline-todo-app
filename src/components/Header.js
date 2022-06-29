@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { RiPlayListAddLine } from 'react-icons/ri';
 import { v4 as uuidv4 } from 'uuid';
 
-import { clearAllToDos, addToDo } from '../functions';
+import { clearAllToDos } from '../functions';
 import '../styles/App.css';
 import '../styles/components/header.css';
 
 
-const Header = ({ updateToDoList }) => {
+const Header = ({ updateToDoList, setToDos }) => {
     const [todo, setToDo] = useState('');
     const [error, setError] = useState('');
 
@@ -36,16 +36,21 @@ const Header = ({ updateToDoList }) => {
     return (
         <header className="App-header">
             <h1>TODO Manager</h1>
-            <form onSubmit={handleSubmit} className='App-header__form'>
-                <input
-                    type="text"
-                    placeholder='Add todo here...'
-                    onChange={handleOnChange}
-                    value={todo}
-                    className='input'
-                />
-                <button className='App-header__del-btn' onClick={() => clearAllToDos()}>clear all</button>
-            </form>
+            <div className="header__container">
+                <form onSubmit={handleSubmit} className='App-header__form'>
+                    <input
+                        type="text"
+                        placeholder='Add todo here...'
+                        onChange={handleOnChange}
+                        value={todo}
+                        className='input'
+                    />
+                </form>
+                <button className='App-header__del-btn' onClick={() => {
+                    setToDos([])
+                    clearAllToDos()
+                }}>clear all</button>
+            </div>
             {!!error && <p className='error'>{error}</p>}
         </header>
     )

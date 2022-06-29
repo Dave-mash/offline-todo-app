@@ -3,21 +3,25 @@
  */
 
 const store = localStorage.getItem('todos');
-const todos = !store ? [] : JSON.parse(store);
 
 // fetch single todo
 const fetchOneTodo = (id) => {
+    const todos = !store ? [] : JSON.parse(store);
     const todo = todos.filter(_todo => _todo.id === id);
 
     return todo;
 }
 
 // fetch available todos
-export const fetchOfflineToDos = () => todos;
+export const fetchOfflineToDos = () => {
+    const store = localStorage.getItem('todos');
+    const todos = !store ? [] : JSON.parse(store);
+    
+    return todos;
+};
 
 // add todo
 export const addToDo = (payload) => {
-    const store = localStorage.getItem('todos');
     const todos = !store ? [] : JSON.parse(store);
     
     todos.push(payload);
@@ -27,6 +31,7 @@ export const addToDo = (payload) => {
 
 // update todo
 export const updateToDo = (id, update) => {
+    const todos = !store ? [] : JSON.parse(store);
     const completedToDo = fetchOneTodo(id);
 
     todos.forEach(todo => {
@@ -38,6 +43,7 @@ export const updateToDo = (id, update) => {
 
 // remove todo
 export const removeToDo = (id) => {
+    const todos = !store ? [] : JSON.parse(store);
     const updatedToDo = todos.filter(todo => todo.id !== id);
     const serializedToDos = JSON.stringify(updatedToDo);
 
@@ -45,6 +51,4 @@ export const removeToDo = (id) => {
 }
 
 // clear all todos 
-export const clearAllToDos = () => {
-    localStorage.setItem('todos', JSON.stringify([]));
-}
+export const clearAllToDos = () => localStorage.removeItem('todos')

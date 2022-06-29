@@ -5,9 +5,16 @@
     justify-content: space-between;
     align-items: center;
 }
+.header__container {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .input {
     border: none;
-    width: 60%;
+    width: 80%;
     font-size: 15px;
     padding: 15px;
     margin: 20px 0;
