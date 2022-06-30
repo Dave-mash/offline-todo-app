@@ -17,3 +17,12 @@
 .incompelete {
     text-decoration: underline;
 }
+.todo-item__status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+}
+.todo-item__inactive {
+    text-decoration: line-through;
+}

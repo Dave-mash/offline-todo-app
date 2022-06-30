@@ -1,37 +1,40 @@
 import { useState } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
-import { updateToDo } from '../functions';
+import { updateToDo, removeToDo, sortToDoList } from '../functions';
 import '../styles/components/todo-item.css';
 
-const ToDoItem = ({ todo: { title, time, id } }) => {
-    const [complete, setComplete] = useState(false);
-    const handleRemoveTodo = (e) => {
-        const target = e.target.parentElement;
+const ToDoItem = ({
+        todo: { title, time, id, completed },
+        todos,
+        updateToDoStatus
+    }) => {
+    const [complete, setComplete] = useState(completed);
 
-        console.log(target);
-    }
+    const handleToggleToDoStatus = () => {
+        const status = !complete;
 
-    const handleCompleteToDo = () => {
-        setComplete(complete);
-        updateToDo(id, complete);
+        setComplete(status);
+        updateToDoStatus(id, status);
     }
 
     return (
-        <div
-            className="todo-item"
-            onClick={handleCompleteToDo}
-        >
-            <p>
-                <input type="checkbox" value={complete} checked={complete} onChange={(e) => console.log(e.target.value)} />
-                {title}
-            </p>
-            <small>{time}</small>
+        <div className="todo-item">
+            <div
+                className={`todo-item__status ${complete ? 'todo-item__inactive' : ''}`}
+                onClick={handleToggleToDoStatus}
+            >
+                <p>
+                    <input type="checkbox" value={complete} checked={complete} onChange={(e) => console.log(e.target.value)} />
+                    {title}
+                </p>
+                <small>{time}</small>
+            </div>
             <RiDeleteBin6Line
                 style={{
                     color: 'tomato'
                 }}
-                onClick={handleRemoveTodo}
+                onClick={() => removeToDo(id)}
             />
         </div>
     )

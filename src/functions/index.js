@@ -9,7 +9,7 @@ const fetchOneTodo = (id) => {
     const todos = !store ? [] : JSON.parse(store);
     const todo = todos.filter(_todo => _todo.id === id);
 
-    return todo;
+    return todo[0];
 }
 
 // fetch available todos
@@ -17,28 +17,36 @@ export const fetchOfflineToDos = () => {
     const store = localStorage.getItem('todos');
     const todos = !store ? [] : JSON.parse(store);
     
-    return todos;
+    return !todos ? [] : todos;
 };
 
 // add todo
 export const addToDo = (payload) => {
+    const store = localStorage.getItem('todos');
     const todos = !store ? [] : JSON.parse(store);
     
-    todos.push(payload);
+    todos.unshift(payload);
     const updatedToDos = JSON.stringify(todos);
-    localStorage.setItem('todos', updatedToDos);
+    
+    localStorage.setItem('todos', JSON.stringify(updatedToDos));
+    
+    return sortToDoList(todos);
 }
 
 // update todo
 export const updateToDo = (id, update) => {
+    const store = localStorage.getItem('todos');
     const todos = !store ? [] : JSON.parse(store);
-    const completedToDo = fetchOneTodo(id);
 
     todos.forEach(todo => {
-        if (todo.id === id) completedToDo.completed = update
+        if (todo.id === id) todo.completed = update
     });
 
+    console.log('here we are')
+
     localStorage.setItem('todos', JSON.stringify(todos));
+
+    return todos
 }
 
 // remove todo
@@ -52,3 +60,26 @@ export const removeToDo = (id) => {
 
 // clear all todos 
 export const clearAllToDos = () => localStorage.removeItem('todos')
+
+// sort todo list
+export const sortToDoList = (todoList) => {
+    const completedToDos = [];
+    const pendingToDos = [];
+
+    for(let i = 0; i < todoList.length; i++) {
+        const todo = todoList[i];
+
+        if (!todo.completed) {
+            completedToDos.unshift(todo);
+        } else {
+            pendingToDos.unshift(todo);
+        }
+    }
+
+    const sortedToDos = !!todoList?.length && completedToDos.concat(pendingToDos);
+    const serializedToDos = !sortedToDos ? JSON.stringify([]) : JSON.stringify(sortedToDos);
+
+    localStorage.setItem('todos', serializedToDos);
+
+    return sortedToDos;
+}

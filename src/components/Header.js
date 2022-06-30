@@ -19,6 +19,7 @@ const Header = ({ updateToDoList, setToDos }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (!!parseInt(todo)) return setError('Please enter a valid title'); // revisit this part
 
         const id = uuidv4();

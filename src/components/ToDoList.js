@@ -1,16 +1,22 @@
-import { useEffect, useState } from "react";
-
 import ToDoItem from "./ToDoItem";
+import { sortToDoList } from '../functions';
 import '../styles/components/todo-list.css';
 
-const ToDoList = ({ todos }) => {
+const ToDoList = ({ todos, updateToDoStatus }) => {
+    const todoList = sortToDoList(todos);
+
     return (
         <>
             <div className="todo-list">
                 <div className="todo-list__content">
                     {
-                        !!todos?.length ? todos.map((todo) => (
-                            <ToDoItem key={todo.id} todo={todo} />
+                        !!todoList?.length ? todoList.map((todo) => (
+                            <ToDoItem
+                                key={todo.id}
+                                todo={todo}
+                                todos={todos}
+                                updateToDoStatus={updateToDoStatus}
+                            />
                         )) : <p>Nothing here yet! Add a ToDo?</p>
                     }
                 </div>

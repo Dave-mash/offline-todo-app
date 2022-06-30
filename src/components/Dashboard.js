@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-import { fetchOfflineToDos, addToDo } from '../functions';
+import {
+    fetchOfflineToDos,
+    addToDo,
+    updateToDo
+} from '../functions';
 import Header from './Header';
 import ToDoList from './ToDoList';
 
@@ -9,17 +13,19 @@ const Dashboard = () => {
     const [todos, setToDos] = useState(storedToDos);
 
     const updateToDoList = updates => {
-        addToDo(updates);
-        setToDos([
-            updates,
-            ...todos
-        ]);
+        const todoList = addToDo(updates);
+
+        setToDos(todoList);
     };
+
+    const updateToDoStatus = (id, status) => {
+        setToDos(updateToDo(id, status));
+    }
 
     return (
         <>
             <Header updateToDoList={updateToDoList} setToDos={setToDos} />
-            <ToDoList todos={todos} setToDos={setToDos} />
+            <ToDoList todos={todos} setToDos={setToDos} updateToDoStatus={updateToDoStatus} />
         </>
     );
 }
